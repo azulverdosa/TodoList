@@ -7,6 +7,7 @@ const AddItemForm = () => {
   const [tasks, setTasks] = useState({
     task: '',
     note: '',
+    // completed: false,
   });
 
   const handleChange = (event) => {
@@ -22,16 +23,35 @@ const AddItemForm = () => {
   const handleClick = (event) => {
     event.preventDefault();
 
+    // const newTask = {
+    //   task: tasks.task,
+    //   note: tasks.note,
+    // };
+
     const newTask = {
+      id: `todo-${nanoid()}`,
       task: tasks.task,
       note: tasks.note,
+      completed: false,
     };
 
-    axios.post(urlJoin(process.env.REACT_APP_API_URL, 'additem'), newTask);
+    axios
+      .post(urlJoin(process.env.REACT_APP_API_URL, 'additem'), newTask)
+      .then((req) => {
+        if (req) {
+          console.log('success', newTask);
+        } else {
+          throw req;
+        }
+      })
+      .catch((err) => {
+        console.log('error?', err);
+      });
   };
 
   return (
     <form className="ui form" style={{ margin: '20px' }}>
+      Just to see changes in AddItemForm
       <div className="field">
         <h3>What needs doing?</h3>
         <input
