@@ -6,14 +6,17 @@ const Header = () => {
       <Link to="/">
         <button className="ui compact right floated button">Home</button>
       </Link>
-      <Link to="/list">
-        <button className="ui compact right floated button">List</button>
+      <Link to="/list/:id">
+        <button className="ui compact right floated button">A List</button>
       </Link>
       <Link to="/additem">
         <button className="ui compact right floated button">Add Task</button>
       </Link>
       <Link to="/login">
         <button className="ui compact right floated button">Login</button>
+      </Link>
+      <Link to="/lists">
+        <button className="ui compact right floated button">Your Lists</button>
       </Link>
       <Link to="/register">
         <button className="ui compact right floated button">Register</button>
