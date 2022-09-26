@@ -3,8 +3,8 @@ import { nanoid } from 'nanoid';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
-const AddItemForm = () => {
-  const [tasks, setTasks] = useState({
+const AddItemForm = ({ setTasks }) => {
+  const [newTask, setNewTask] = useState({
     task: '',
     note: '',
     // completed: false,
@@ -12,7 +12,7 @@ const AddItemForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setTasks((prevTasks) => {
+    setNewTask((prevTasks) => {
       return {
         ...prevTasks,
         [name]: value,
@@ -20,28 +20,20 @@ const AddItemForm = () => {
     });
   };
 
-  const handleClick = (event) => {
+  const handleAdd = (event) => {
     event.preventDefault();
 
-    // const newTask = {
-    //   task: tasks.task,
-    //   note: tasks.note,
-    // };
-
-    const newTask = {
-      id: `todo-${nanoid()}`,
-      task: tasks.task,
-      note: tasks.note,
-      completed: false,
-    };
-
     axios
-      .post(urlJoin(process.env.REACT_APP_API_URL, 'additem'), newTask)
-      .then((req) => {
-        if (req) {
-          console.log('success', newTask);
+      .post(urlJoin(process.env.REACT_APP_API_URL, 'additem'), {
+        task: newTask.task,
+        note: newTask.note,
+        completed: false,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setTasks(res.data);
         } else {
-          throw req;
+          throw res;
         }
       })
       .catch((err) => {
@@ -51,14 +43,13 @@ const AddItemForm = () => {
 
   return (
     <form className="ui form" style={{ margin: '20px' }}>
-      Just to see changes in AddItemForm
       <div className="field">
         <h3>What needs doing?</h3>
         <input
           onChange={handleChange}
           type="text"
           name="task"
-          value={tasks.taskName}
+          value={newTask.taskName}
           placeholder="Task name"
           autoComplete="off"
         />
@@ -68,12 +59,12 @@ const AddItemForm = () => {
           onChange={handleChange}
           rows="2"
           name="note"
-          value={tasks.taskNote}
+          value={newTask.taskNote}
           placeholder="Add a note..."
           autoComplete="off"
         ></textarea>
       </div>
-      <button onClick={handleClick} className="ui button" type="submit">
+      <button onClick={handleAdd} className="ui button">
         Add Task
       </button>
     </form>
