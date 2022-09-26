@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
-import AddItemForm from './components/Lists/AddItem';
 import Home from './components/Home';
 import List from './components/Lists/List';
 import Lists from './components/Lists/Lists';
@@ -17,7 +16,6 @@ const App = () => {
         <div>
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/additem" exact element={<AddItemForm />} />
             <Route path="/list/:id" exact element={<List />} />
             <Route path="/lists" exact element={<Lists />} />
             <Route path="/login" exact element={<Login />} />
