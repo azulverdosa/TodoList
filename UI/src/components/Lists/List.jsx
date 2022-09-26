@@ -7,6 +7,14 @@ import TaskItem from './Task';
 const listName = 'This will be the LIST NAME';
 
 const List = () => {
+  const [tasks, setTasks] = useState([
+    {
+      id: '',
+      task: '',
+      note: '',
+      completed: false,
+    },
+  ]);
   const editList = () => {};
 
   return (
@@ -15,8 +23,8 @@ const List = () => {
         <i className="edit icon" />
       </button>
       <h3>{listName}</h3>
-      <TaskItem />
-      <AddItemForm />
+      <TaskItem tasks={tasks} setTasks={setTasks} />
+      <AddItemForm setTasks={setTasks} />
     </div>
   );
 };
