@@ -6,6 +6,7 @@ const Home = () => {
   return (
     <div style={{ margin: '20px' }}>
       <DeleteItem />
+      Mostly just a test
       <EditItem />
     </div>
   );
