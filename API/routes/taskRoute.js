@@ -4,7 +4,11 @@ const Task = require('../models/taskModel');
 
 const getAllTasks = (res) => Task.find().then((foundTasks) => res.json(foundTasks));
 
-router.route('/additem').post((req, res) => {
+router.route('/').get((req, res) => {
+  getAllTasks(res);
+});
+
+router.route('/').post((req, res) => {
   const task = req.body.task;
   const note = req.body.note;
   const completed = req.body.completed;
@@ -20,15 +24,7 @@ router.route('/additem').post((req, res) => {
   });
 });
 
-// .get((req, res) => {
-//   getAllTasks(res);
-// });
-
-router.route('/task').get((req, res) => {
-  getAllTasks(res);
-});
-
-router.route(`/task/:taskId`).delete((req, res) => {
+router.route(`/:taskId`).delete((req, res) => {
   const taskId = req.params.taskId;
 
   Task.findByIdAndRemove(taskId)
