@@ -1,30 +1,130 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import urlJoin from 'url-join';
 
 const Login = () => {
+  const [newUser, setNewUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [error, setError] = useState({ message: '' });
+
+  const handleInputChange = (event) => {
+    event.preventDefault();
+
+    const { name, value } = event.target;
+    setNewUser((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+    console.log(newUser);
+  };
+
+  const handlePasswordConfirm = (event) => {
+    event.preventDefault();
+
+    const { value } = event.target;
+    setPasswordConfirm(value);
+  };
+
+  const handleRegisterClick = (event) => {
+    event.preventDefault();
+    if (
+      newUser.name === '' ||
+      newUser.email === '' ||
+      newUser.password === '' ||
+      newUser.confirmPassword
+    ) {
+      setError({ message: 'Fields cannot be blank' });
+    } else if (newUser.name && newUser.email && newUser.password === passwordConfirm) {
+      axios
+        .post(urlJoin(process.env.REACT_APP_API_URL, 'user'), newUser)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log('success');
+            setLoginStatus(true);
+          } else {
+            console.log('not error but will throw');
+            throw res;
+          }
+        })
+        .catch((err) => {
+          console.log('error?', err);
+        })
+        .then((res) => {
+          if (res !== 200) {
+            setError({ message: 'User already exists' });
+          }
+        });
+    } else {
+      console.log('something went wrong', newUser.name, newUser.password, passwordConfirm); //this needs to be chaged - but to waht?
+    }
+  };
+
+  console.log(loginStatus);
   return (
     <div className="ui large form error" style={{ margin: '20px' }}>
       <div className="two fields">
         <form style={{ padding: 30 }}>
           <div className="field">
             <label autoComplete="off">Name</label>
-            <input type="text" name="first-name" placeholder="First Name" />
+            <input
+              name="name"
+              value={newUser.name}
+              onChange={handleInputChange}
+              placeholder="First Name"
+              type="text"
+            />
+          </div>
+          <br />
+          <div className="field">
+            <label autoComplete="off">Email</label>
+            <input
+              name="email"
+              value={newUser.email}
+              onChange={handleInputChange}
+              placeholder="Email"
+              type="text"
+            />
           </div>
           <br />
           <div className="field">
             <label autoComplete="off">Password</label>
-            <input type="password" />
+            <input
+              name="password"
+              value={newUser.password}
+              onChange={handleInputChange}
+              placeholder="Password"
+              type="password"
+            />
           </div>
           <br />
           <div className="field">
             <label autoComplete="off">Password</label>
-            <input type="password" />
+
+            <input
+              name="passwordConfirm"
+              value={passwordConfirm}
+              onChange={handlePasswordConfirm}
+              placeholder="Confirm Password"
+              type="password"
+            />
           </div>
           <br />
-          {/* <div>
+          <div>
             <div className="ui error message">
               {error.message && <div className="header">{error.message}</div>}
-            </div> */}
-          <button className="ui submit button">Register</button>
+            </div>
+          </div>
+          <br />
+          <button onClick={handleRegisterClick} className="ui submit button">
+            Register
+          </button>
         </form>
       </div>
     </div>
