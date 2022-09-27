@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
@@ -20,11 +19,13 @@ const AddItemForm = ({ setTasks }) => {
     });
   };
 
+  console.log(newTask);
+
   const handleAdd = (event) => {
     event.preventDefault();
 
     axios
-      .post(urlJoin(process.env.REACT_APP_API_URL, 'additem'), {
+      .post(urlJoin(process.env.REACT_APP_API_URL, 'task'), {
         task: newTask.task,
         note: newTask.note,
         completed: false,
