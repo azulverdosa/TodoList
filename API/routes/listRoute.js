@@ -24,4 +24,17 @@ router.route('/').post((req, res) => {
   // });
 });
 
+router.route('/:listId').delete((req, res) => {
+  const listId = req.params.listId;
+
+  List.findByIdAndDelete(listId)
+    .then(() => {
+      getAllLists(res);
+    })
+    .catch((err) => {
+      console.log(`Failed deleteing task ${listId}`, err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
