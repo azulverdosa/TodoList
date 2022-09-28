@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
-const AddItemForm = ({ setTasks }) => {
+const AddTask = ({ setTasks }) => {
   const [newTask, setNewTask] = useState({
     task: '',
     note: '',
-    // completed: false,
+    completed: false,
   });
 
   const handleChange = (event) => {
+    // event.preventDefault(); -- needed??
     const { name, value } = event.target;
     setNewTask((prevTasks) => {
       return {
@@ -21,7 +22,7 @@ const AddItemForm = ({ setTasks }) => {
 
   console.log(newTask);
 
-  const handleAdd = (event) => {
+  const handleAddTask = (event) => {
     event.preventDefault();
 
     axios
@@ -65,11 +66,11 @@ const AddItemForm = ({ setTasks }) => {
           autoComplete="off"
         ></textarea>
       </div>
-      <button onClick={handleAdd} className="ui button">
+      <button onClick={handleAddTask} className="ui button">
         Add Task
       </button>
     </form>
   );
 };
 
-export default AddItemForm;
+export default AddTask;
