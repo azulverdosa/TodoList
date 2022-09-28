@@ -3,7 +3,9 @@ import axios from 'axios';
 import urlJoin from 'url-join';
 import { nanoid } from 'nanoid';
 
-const TaskItem = ({ tasks, setTasks }) => {
+const TaskItem = ({ tasks, setTasks, isEditing }) => {
+  // const [editOn, setEditOn] = useState(false);
+
   useEffect(() => {
     axios
       .get(urlJoin(process.env.REACT_APP_API_URL, 'task'))
@@ -35,14 +37,19 @@ const TaskItem = ({ tasks, setTasks }) => {
   };
 
   const handleEditItem = (id) => {
-    tasks.find((task) => id === task._id && console.log(task));
+    // setInputType('text');
+    // setEditOn(!editOn);
+    // tasks.find((task) => id === task._id && setEditOn(!editOn));
   };
 
-  return (
+  const editTaskTemplate = (
     <div>
       {tasks.map((task) => (
         <ul key={nanoid(10)}>
           <div>
+            {/* {editOn && <input type="text" placeholder={task.task} />}
+            {!editOn && <input type="checkbox" />} */}
+
             <input type="checkbox" />
             <label>{task.task}</label>
           </div>
@@ -69,6 +76,22 @@ const TaskItem = ({ tasks, setTasks }) => {
       ))}
     </div>
   );
+
+  const viewListTemplate = (
+    <div>
+      {tasks.map((task) => (
+        <ul key={nanoid(10)}>
+          <div>
+            <input type="checkbox" />
+            <label>{task.task}</label>
+          </div>
+          <p>{task.note}</p>
+        </ul>
+      ))}
+    </div>
+  );
+
+  return <div>{isEditing ? editTaskTemplate : viewListTemplate} </div>;
 };
 
 export default TaskItem;
