@@ -10,7 +10,7 @@ const AddTask = ({ setTasks }) => {
   });
 
   const handleChange = (event) => {
-    // event.preventDefault(); -- needed??
+    event.preventDefault(); //-- needed??
     const { name, value } = event.target;
     setNewTask((prevTasks) => {
       return {
