@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AddItemForm from './AddItem';
+import AddTask from './AddTask';
 import TaskItem from './Task';
 
 const listName = 'This will be the LIST NAME';
@@ -8,7 +8,6 @@ const List = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tasks, setTasks] = useState([
     {
-      id: '',
       task: '',
       note: '',
       completed: false,
@@ -27,7 +26,7 @@ const List = () => {
       </button>
       <h3>{listName}</h3>
       <TaskItem tasks={tasks} setTasks={setTasks} isEditing={isEditing} />
-      <AddItemForm setTasks={setTasks} />
+      <AddTask setTasks={setTasks} />
     </div>
   );
 };
