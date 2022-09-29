@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import urlJoin from 'url-join';
 
-const AddList = () => {
+const AddList = ({ setLists }) => {
   const [newList, setNewList] = useState([
     {
       title: '',
@@ -17,25 +17,30 @@ const AddList = () => {
       return { ...prevLists, [name]: value };
     });
   };
-  console.log(newList);
 
   const handleAddList = (event) => {
     event.preventDefault();
 
-    axios.post(urlJoin(process.env.REACT_APP_API_URL, 'list'), {
-      title: newList.title,
-      note: newList.note,
-    });
-    // .then((res) => {
-    //
-    // })
+    axios
+      .post(urlJoin(process.env.REACT_APP_API_URL, 'lists'), {
+        title: newList.title,
+        note: newList.note,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setLists(res.data);
+        } else {
+          throw res;
+        }
+      })
+      .catch((err) => {
+        console.log('error?', err);
+      });
   };
 
   return (
     <div>
-      <div style={{ margin: '20px' }}>
-        <h3>These are your lists:</h3>
-      </div>
+      <div style={{ margin: '20px' }}></div>
 
       <form className="ui form" style={{ margin: '20px' }}>
         <div className="field">
