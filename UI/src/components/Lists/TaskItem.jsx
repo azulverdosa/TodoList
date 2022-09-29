@@ -1,32 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
-import { nanoid } from 'nanoid';
 
-const TaskItem = ({ tasks, setTasks, isEditing }) => {
-  // const [editOn, setEditOn] = useState(false);
+import EditForm from '../EditForm';
 
-  useEffect(() => {
+const TaskItem = ({ task, setTasks, isEditing, updateList }) => {
+  const [editOn, setEditOn] = useState(false);
+
+  const toggleTaskCompleted = () => {
+    // should axios post like in edit form
+    // and update list with updateList
+  };
+
+  const handleDeleteItem = () => {
     axios
-      .get(urlJoin(process.env.REACT_APP_API_URL, 'task'))
+      .delete(urlJoin(process.env.REACT_APP_API_URL, 'task', task._id))
       .then((res) => {
         if (res.status === 200) {
-          setTasks(res.data);
-        } else {
-          throw res;
-        }
-      })
-      .catch((err) => {
-        console.log('error?', err);
-      });
-  }, []);
-
-  const handleDelete = (id) => {
-    axios
-      .delete(urlJoin(process.env.REACT_APP_API_URL, 'task', id))
-      .then((res) => {
-        if (res.status === 200) {
-          setTasks(res.data);
+          updateList(res.data);
         } else {
           throw res;
         }
@@ -36,62 +27,51 @@ const TaskItem = ({ tasks, setTasks, isEditing }) => {
       });
   };
 
-  const handleEditItem = (id) => {
-    // setInputType('text');
-    // setEditOn(!editOn);
-    // tasks.find((task) => id === task._id && setEditOn(!editOn));
+  const handleEditItem = () => {
+    setEditOn(!editOn);
   };
 
-  const editTaskTemplate = (
-    <div>
-      {tasks.map((task) => (
-        <ul key={nanoid(10)}>
-          <div>
-            {/* {editOn && <input type="text" placeholder={task.task} />}
-            {!editOn && <input type="checkbox" />} */}
-
-            <input type="checkbox" />
-            <label>{task.task}</label>
-          </div>
-          <p>{task.note}</p>
-          <div>
-            <button
-              onClick={() => {
-                handleEditItem(task._id);
-              }}
-              className="ui compact icon floated button"
-            >
-              <i className="edit icon" />
-            </button>
-            <button
-              onClick={() => {
-                handleDelete(task._id);
-              }}
-              className="ui compact icon floated button"
-            >
-              <i className="trash icon" />
-            </button>
-          </div>
-        </ul>
-      ))}
-    </div>
+  const editTaskTemplate = editOn ? (
+    <EditForm
+      item={task}
+      setItems={setTasks}
+      exitEditForm={handleEditItem}
+      updateList={updateList}
+    />
+  ) : (
+    <>
+      <label>{task.title}</label>
+      <p>{task.note}</p>
+      <div>
+        <button onClick={handleEditItem} className="ui compact icon floated button">
+          <i className="edit icon" />
+        </button>
+        <button
+          onClick={() => {
+            handleDeleteItem();
+          }}
+          className="ui compact icon floated button"
+        >
+          <i className="trash icon" />
+        </button>
+      </div>
+    </>
   );
 
   const viewListTemplate = (
-    <div>
-      {tasks.map((task) => (
-        <ul key={nanoid(10)}>
-          <div>
-            <input type="checkbox" />
-            <label>{task.task}</label>
-          </div>
-          <p>{task.note}</p>
-        </ul>
-      ))}
+    <div className="ui list">
+      <input
+        id={task._id}
+        type="checkbox"
+        defaultChecked={task.completed}
+        onChange={toggleTaskCompleted}
+      />
+      <label className="header"> {task.title}</label>
+      <p className="description">{task.note}</p>
     </div>
   );
 
-  return <div>{isEditing ? editTaskTemplate : viewListTemplate} </div>;
+  return <div style={{ margin: '20px' }}>{isEditing ? editTaskTemplate : viewListTemplate} </div>;
 };
 
 export default TaskItem;
