@@ -17,11 +17,9 @@ router.route('/').post((req, res) => {
     note,
   });
 
-  newList.save();
-
-  // .then(() => {
-  //   getAllLists(res);
-  // });
+  newList.save().then(() => {
+    getAllLists(res);
+  });
 });
 
 router.route('/:listId').delete((req, res) => {
@@ -35,6 +33,23 @@ router.route('/:listId').delete((req, res) => {
       console.log(`Failed deleteing task ${listId}`, err);
       res.sendStatus(500);
     });
+});
+
+router.route('/:listId').post((req, res) => {
+  const listId = req.params.listId;
+  const list = req.body.list;
+  const note = req.body.note;
+
+  List.findByIdAndUpdate(listId, { list: list, note: note }) //I want this to update any changes - or just update all as if one doesn't change it's the same anyway
+    .then(() => {
+      getAllLists(res);
+      console.log('res');
+    })
+    .catch((err) => {
+      console.log(`Failed to update list ${listId}`, err);
+      res.sendStatus(500);
+    });
+  console.log('meow');
 });
 
 module.exports = router;
