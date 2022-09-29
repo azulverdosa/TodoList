@@ -23,7 +23,7 @@ const Header = () => {
       <i className="list ul icon"></i>
       <div className="content">
         TodoMatic
-        <div className="sub header">Manage all your ideas, tasks and something!</div>
+        <div className="sub header">Manage all your ideas, tasks and something something!</div>
       </div>
     </h2>
   );
