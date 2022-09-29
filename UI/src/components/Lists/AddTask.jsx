@@ -4,7 +4,7 @@ import urlJoin from 'url-join';
 
 const AddTask = ({ setTasks }) => {
   const [newTask, setNewTask] = useState({
-    task: '',
+    title: '',
     note: '',
     completed: false,
   });
@@ -20,14 +20,12 @@ const AddTask = ({ setTasks }) => {
     });
   };
 
-  console.log(newTask);
-
   const handleAddTask = (event) => {
     event.preventDefault();
 
     axios
       .post(urlJoin(process.env.REACT_APP_API_URL, 'task'), {
-        task: newTask.task,
+        title: newTask.title,
         note: newTask.note,
         completed: false,
       })
@@ -50,8 +48,8 @@ const AddTask = ({ setTasks }) => {
         <input
           onChange={handleChange}
           type="text"
-          name="task"
-          value={newTask.taskName}
+          name="title"
+          value={newTask.title}
           placeholder="Task name"
           autoComplete="off"
         />
@@ -61,7 +59,7 @@ const AddTask = ({ setTasks }) => {
           onChange={handleChange}
           rows="2"
           name="note"
-          value={newTask.taskNote}
+          value={newTask.note}
           placeholder="Add a note..."
           autoComplete="off"
         ></textarea>
