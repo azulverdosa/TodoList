@@ -18,7 +18,7 @@ connection.once('open', () => {
 
 app.use('/task', require('./routes/taskRoute'));
 app.use('/user', require('./routes/userRoute'));
-app.use('/list', require('./routes/listRoute'));
+app.use('/lists', require('./routes/listRoute'));
 
 app.listen(3001, function () {
   console.log('Express server is running on port 3001');
