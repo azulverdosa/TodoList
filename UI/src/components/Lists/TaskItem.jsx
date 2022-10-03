@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
+import { nanoid } from 'nanoid';
 
 import EditForm from '../EditForm';
 
@@ -58,8 +59,8 @@ const TaskItem = ({ task, setTasks, isEditing, updateList }) => {
     </>
   );
 
-  const viewListTemplate = (
-    <div className="ui list">
+  const viewTaskTemplate = (
+    <div>
       <input
         id={task._id}
         type="checkbox"
@@ -71,7 +72,7 @@ const TaskItem = ({ task, setTasks, isEditing, updateList }) => {
     </div>
   );
 
-  return <div style={{ margin: '20px' }}>{isEditing ? editTaskTemplate : viewListTemplate} </div>;
+  return <div style={{ margin: '20px' }}>{isEditing ? editTaskTemplate : viewTaskTemplate} </div>;
 };
 
 export default TaskItem;
