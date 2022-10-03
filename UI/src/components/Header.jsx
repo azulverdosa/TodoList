@@ -12,7 +12,7 @@ const Header = () => {
       <Link to="/">
         <button className="ui compact right floated button">Home</button>
       </Link>
-      <Link to="/list/:id">
+      <Link to="/list">
         <button className="ui compact right floated button">A List</button>
       </Link>
 
