@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
-const AddTask = ({ setTasks }) => {
+const AddTask = ({ setTasks, listId }) => {
   const [newTask, setNewTask] = useState({
     title: '',
     note: '',
@@ -10,7 +10,7 @@ const AddTask = ({ setTasks }) => {
   });
 
   const handleChange = (event) => {
-    event.preventDefault(); //-- needed??
+    event.preventDefault();
     const { name, value } = event.target;
     setNewTask((prevTasks) => {
       return {
@@ -27,10 +27,12 @@ const AddTask = ({ setTasks }) => {
       .post(urlJoin(process.env.REACT_APP_API_URL, 'task'), {
         title: newTask.title,
         note: newTask.note,
+        listId: listId,
         completed: false,
       })
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.data);
           setTasks(res.data);
         } else {
           throw res;
@@ -67,6 +69,7 @@ const AddTask = ({ setTasks }) => {
       <button onClick={handleAddTask} className="ui button">
         Add Task
       </button>
+      {listId}
     </form>
   );
 };
