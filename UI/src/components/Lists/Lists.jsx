@@ -9,7 +9,6 @@ import ListItem from './ListItem';
 const ListsList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [lists, setLists] = useState([]);
-
   useEffect(() => {
     isEditing ||
       axios
@@ -45,7 +44,7 @@ const ListsList = () => {
 
       {lists.map((list) => (
         <ListItem
-          key={nanoid(10)}
+          key={list._id}
           list={list}
           setLists={setLists}
           isEditing={isEditing}
