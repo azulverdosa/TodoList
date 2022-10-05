@@ -12,10 +12,6 @@ const Header = () => {
       <Link to="/">
         <button className="ui compact right floated button">Home</button>
       </Link>
-      <Link to="/list">
-        <button className="ui compact right floated button">A List</button>
-      </Link>
-
       <Link to="/lists">
         <button className="ui compact right floated button">Your Lists</button>
       </Link>
