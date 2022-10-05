@@ -7,6 +7,7 @@ const AddList = ({ setLists }) => {
     {
       title: '',
       note: '',
+      tasks: [],
     },
   ]);
 
@@ -22,7 +23,7 @@ const AddList = ({ setLists }) => {
     event.preventDefault();
 
     axios
-      .post(urlJoin(process.env.REACT_APP_API_URL, 'lists'), {
+      .post(urlJoin(process.env.REACT_APP_API_URL, 'list'), {
         title: newList.title,
         note: newList.note,
       })
