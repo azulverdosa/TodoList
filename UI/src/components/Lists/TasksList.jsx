@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import urlJoin from 'url-join';
-import { nanoid } from 'nanoid';
 
 import AddTask from './AddTask';
 import TaskItem from './TaskItem';
 
 const listName = 'My Shopping List';
 
-// {
-//   title: '',
-//   note: '',
-//   completed: false,
-// },
-
-const List = () => {
+const TasksList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const { listId } = useParams();
 
   useEffect(() => {
     isEditing ||
       axios
-        .get(urlJoin(process.env.REACT_APP_API_URL, 'task'))
+        .get(urlJoin(process.env.REACT_APP_API_URL, 'list', listId))
         .then((res) => {
           if (res.status === 200) {
-            setTasks(
-              res.data.map((task) => ({
-                ...task,
-                title: task.title || task.task,
-              }))
-            );
+            console.log(res);
+            setTasks(res.data);
           } else {
             throw res;
           }
@@ -53,17 +44,17 @@ const List = () => {
 
       {tasks.map((task) => (
         <TaskItem
-          key={nanoid(10)}
+          key={task._id}
+          task={task}
           isEditing={isEditing}
           setTasks={setTasks}
-          task={task}
           updateList={setTasks}
         />
       ))}
 
-      <AddTask setTasks={setTasks} />
+      <AddTask setTasks={setTasks} listId={listId} />
     </div>
   );
 };
 
-export default List;
+export default TasksList;
