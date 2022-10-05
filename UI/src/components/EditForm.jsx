@@ -19,8 +19,6 @@ const EditForm = ({ item, setItems, type, exitEditForm, updateList }) => {
 
   const handleEditSubmit = (event) => {
     event.preventDefault();
-
-    //need a way to change btwn task & list with details
     axios
       .post(urlJoin(process.env.REACT_APP_API_URL, 'task', item._id), {
         title: newItem.title,
