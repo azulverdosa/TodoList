@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import urlJoin from 'url-join';
-import { Button, Modal } from 'semantic-ui-react';
 
-import EditForm from '../EditForm';
+import EditForm from './EditForm';
 import ModalConfirmDelete from '../Modal';
 
 const ListItem = ({ list, setLists, isEditing, updateList }) => {
