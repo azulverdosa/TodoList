@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
-import EditForm from '../EditForm';
+import EditForm from './EditForm';
 import ModalConfirmDelete from '../Modal';
 
 const TaskItem = ({ task, setTasks, isEditing, updateList }) => {
@@ -73,14 +73,6 @@ const TaskItem = ({ task, setTasks, isEditing, updateList }) => {
           }}
           phrase={confirmDeletePhrase}
         />
-        {/* <button
-          onClick={() => {
-            handleDeleteItem();
-          }}
-          className="ui compact icon floated button"
-        >
-          <i className="trash icon" />
-        </button> */}
       </div>
     </>
   );
