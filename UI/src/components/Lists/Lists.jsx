@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
 import urlJoin from 'url-join';
 import axios from 'axios';
 
@@ -36,10 +35,15 @@ const ListsList = () => {
         onClick={() => {
           setIsEditing(!isEditing);
         }}
-        className="ui icon right floated button"
+        className="ui vertical animated right floated button"
+        tabIndex="0"
       >
-        <i className="edit icon" />
+        <div className="visible content">
+          <i className="edit icon" />
+        </div>
+        <div className="hidden content">Edit</div>
       </button>
+
       <h3>Your Lists</h3>
 
       {lists.map((list) => (
