@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Home from './components/Home';
 import List from './components/Lists/TasksList';
 import Login from './components/User/Login';
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/register" exact element={<Register />} />
           </Routes>
         </div>
+        <Footer />
       </Router>
     </div>
   );
