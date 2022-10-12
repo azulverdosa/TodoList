@@ -32,7 +32,6 @@ const AddTask = ({ setTasks, listId }) => {
       })
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
           setTasks(res.data);
         } else {
           throw res;
@@ -69,7 +68,7 @@ const AddTask = ({ setTasks, listId }) => {
       <button onClick={handleAddTask} className="ui button">
         Add Task
       </button>
-      {listId}
+      {/* {listId} */}
     </form>
   );
 };
