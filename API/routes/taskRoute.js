@@ -1,23 +1,11 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
+
 const Task = require('../models/taskModel');
 const List = require('../models/listModel');
 
-const getAllTasks = async (res, ids = []) => {
-  const filter = ids?.length ? { _id: { $in: ids } } : {};
-  const foundTasks = await Task.find(filter);
-
-  const tasks = foundTasks.map((doc) => {
-    const task = doc.toObject();
-
-    return {
-      ...task,
-      title: task.title || task.task,
-    };
-  });
-
-  res.json(tasks);
-};
+const { getListsFromDB, getTasksFromDB } = require('../helpers/databaseHelpers');
 
 router.route('/').post(async (req, res) => {
   const title = req.body.title;
@@ -27,23 +15,31 @@ router.route('/').post(async (req, res) => {
 
   if (listId) {
     try {
-      const list = await List.findById(listId);
+      const lists = await getListsFromDB(listId);
 
-      const newTask = new Task({
-        title,
-        note,
-        completed,
-      });
+      if (lists?.length) {
+        const list = lists?.[0];
 
-      const task = await newTask.save();
+        const newTask = new Task({
+          title,
+          note,
+          completed,
+        });
 
-      const newTasks = list.tasks.concat(task._id);
+        const task = await newTask.save();
 
-      await list.update({
-        tasks: newTasks,
-      });
+        const newTasks = list.tasks.concat(task._id);
 
-      return getAllTasks(res, newTasks);
+        await list.updateOne({
+          tasks: newTasks,
+        });
+
+        const allTasks = await getTasksFromDB(newTasks);
+
+        return res.json(allTasks);
+      }
+
+      res.status(400).send('No list found with that ID');
     } catch (err) {
       console.error(err);
       return res.status(500).send('Oops! Something happened!');
@@ -52,35 +48,80 @@ router.route('/').post(async (req, res) => {
   return res.status(400).send('need a list id!');
 });
 
-router.route('/:taskId').post((req, res) => {
+router.route('/:taskId').post(async (req, res) => {
   const taskId = req.params.taskId;
   const title = req.body.title;
   const note = req.body.note;
   const completed = req.body.completed;
 
-  Task.findByIdAndUpdate(taskId, { title, note, completed })
-    .then((blah) => {
-      console.log(blah);
-      getAllTasks(res);
-    })
-    .catch((err) => {
-      console.log(`Failed to update task ${taskId}`, err);
-      res.sendStatus(500);
-    });
-  console.log('meow');
+  const foundLists = await List.find({ tasks: mongoose.Types.ObjectId(taskId) });
+  // console.log('foundLists :>> ', foundLists);
+
+  if (foundLists?.length) {
+    const mongoList = foundLists?.[0];
+    // console.log('mongoList :>> ', mongoList);
+
+    const listTasks = mongoList.toObject().tasks;
+    // console.log('listTasks :>> ', listTasks);
+
+    return Task.findByIdAndUpdate(taskId, { title, note, completed })
+      .then(async () => {
+        try {
+          if (listTasks.length) {
+            const allTasks = await getTasksFromDB(listTasks);
+            // console.log('allTasks :>> ', allTasks);
+
+            return res.json(allTasks);
+          }
+          return res.send([]);
+        } catch (err) {
+          console.error(err);
+
+          return res.status(500).send('Oops! Something happened!');
+        }
+      })
+      .catch((err) => {
+        console.log(`Failed to update task ${taskId}`, err);
+        res.sendStatus(500);
+      });
+  }
 });
 
-router.route(`/:taskId`).delete((req, res) => {
+router.route('/:taskId').delete(async (req, res) => {
   const taskId = req.params.taskId;
 
-  Task.findByIdAndRemove(taskId)
-    .then(() => {
-      getAllTasks(res);
-    })
-    .catch((err) => {
-      console.log(`Failed deleting task ${taskId}`, err);
-      res.sendStatus(500);
+  const foundLists = await List.find({ tasks: mongoose.Types.ObjectId(taskId) });
+
+  if (foundLists?.length) {
+    const mongoList = foundLists?.[0];
+
+    const leftoverTasks = mongoList.toObject().tasks.filter((task) => {
+      return task.toString() !== taskId;
     });
+
+    await mongoList.updateOne({ tasks: leftoverTasks });
+
+    return Task.findByIdAndDelete(taskId)
+      .then(async () => {
+        try {
+          if (leftoverTasks.length) {
+            const allTasks = await getTasksFromDB(leftoverTasks);
+
+            return res.json(allTasks);
+          }
+
+          return res.send([]);
+        } catch (err) {
+          console.error(err);
+
+          return res.status(500).send('Oops! Something happened!');
+        }
+      })
+      .catch((err) => {
+        console.log(`Failed deleting task ${taskId}`, err);
+        res.sendStatus(500);
+      });
+  }
 });
 
 module.exports = router;
