@@ -6,13 +6,13 @@ import urlJoin from 'url-join';
 import AddTask from './AddTask';
 import TaskItem from './TaskItem';
 
-const listName = 'My Shopping List';
-
 const TasksList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [hideCompleted, setHideCompleted] = useState(false);
+
   const { listId } = useParams();
+
+  const listName = listId;
 
   useEffect(() => {
     isEditing ||

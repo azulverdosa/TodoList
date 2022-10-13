@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
-const EditForm = ({ item, setItems, type, exitEditForm, updateList }) => {
+const EditForm = ({ item, exitEditForm, updateList }) => {
   const [newItem, setNewItem] = useState(item);
 
   const handleChange = (event) => {
