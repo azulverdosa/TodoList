@@ -40,6 +40,8 @@ const AddTask = ({ setTasks, listId }) => {
       .catch((err) => {
         console.log('error?', err);
       });
+
+    setNewTask({ title: '', note: '' });
   };
 
   return (

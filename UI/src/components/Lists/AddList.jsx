@@ -37,6 +37,8 @@ const AddList = ({ setLists }) => {
       .catch((err) => {
         console.log('error?', err);
       });
+
+    setNewList({ title: '', note: '' });
   };
 
   return (
