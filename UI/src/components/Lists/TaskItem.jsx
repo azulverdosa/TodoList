@@ -4,6 +4,7 @@ import urlJoin from 'url-join';
 
 import EditForm from './EditForm';
 import ModalConfirmDelete from '../Modal';
+import { useEffect } from 'react';
 
 const TaskItem = ({ task, setTasks, isEditing, updateList }) => {
   const [editOn, setEditOn] = useState(false);
@@ -50,6 +51,12 @@ const TaskItem = ({ task, setTasks, isEditing, updateList }) => {
   const handleEditItem = () => {
     setEditOn(!editOn);
   };
+
+  useEffect(() => {
+    if (!isEditing) {
+      setEditOn(false);
+    }
+  }, [isEditing]);
 
   const editTaskTemplate = editOn ? (
     <EditForm
