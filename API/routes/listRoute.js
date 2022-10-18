@@ -43,13 +43,17 @@ router.route('/:listId').get(async (req, res) => {
   if (listId) {
     try {
       const lists = await getListsFromDB(listId);
+      const listName = await lists[0].title;
 
       if (lists?.length) {
         const taskIds = lists?.[0]?.tasks;
 
         if (taskIds.length) {
           const tasks = await getTasksFromDB(taskIds);
-          return res.json(tasks);
+          return res.json({
+            listName,
+            tasks,
+          });
         }
 
         return res.send([]);
