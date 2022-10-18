@@ -3,7 +3,7 @@ import axios from 'axios';
 import urlJoin from 'url-join';
 
 import EditForm from './EditForm';
-import ModalConfirmDelete from '../Modal';
+import ModalConfirmDelete from '../ModalConfirmDelete';
 import { useEffect } from 'react';
 
 const TaskItem = ({ task, setTasks, isEditing, updateList }) => {

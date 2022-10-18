@@ -4,7 +4,7 @@ import axios from 'axios';
 import urlJoin from 'url-join';
 
 import EditForm from './EditForm';
-import ModalConfirmDelete from '../Modal';
+import ModalConfirmDelete from '../ModalConfirmDelete';
 
 const ListItem = ({ list, setLists, isEditing, updateList }) => {
   const [editOn, setEditOn] = useState(false);
