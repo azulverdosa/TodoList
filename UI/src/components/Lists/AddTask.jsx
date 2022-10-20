@@ -63,14 +63,13 @@ const AddTask = ({ setTasks, listId }) => {
           rows="2"
           name="note"
           value={newTask.note}
-          placeholder="Add a note..."
+          placeholder="Add a note if you like..."
           autoComplete="off"
         ></textarea>
       </div>
-      <button onClick={handleAddTask} className="ui button">
+      <button disabled={!newTask.title} onClick={handleAddTask} className="ui button">
         Add Task
       </button>
-      {/* {listId} */}
     </form>
   );
 };
