@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const year = new Date().getFullYear();
+
   return (
     <h2 className="ui block header">
       <div className="content">
@@ -16,6 +18,7 @@ const Footer = () => {
       <button className="mini ui compact right floated button" style={{ marginTop: '27px' }}>
         Great!
       </button>
+      <footer>{`Copyright © Upbeat Code ${year}`}</footer>;
     </h2>
   );
 };
