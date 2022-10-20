@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 app.use(cors());
 app.use(express.json());
@@ -17,7 +18,7 @@ connection.once('open', () => {
 });
 
 app.use('/task', require('./routes/taskRoute'));
-app.use('/user', require('./routes/userRoute'));
+app.use('/', require('./routes/userRoute'));
 app.use('/list', require('./routes/listRoute'));
 
 app.listen(3001, function () {
