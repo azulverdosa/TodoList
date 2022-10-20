@@ -67,7 +67,7 @@ const AddList = ({ setLists }) => {
           ></textarea>
         </div>
 
-        <button onClick={handleAddList} className="ui button">
+        <button disabled={!newList.title} onClick={handleAddList} className="ui button">
           Add List
         </button>
       </form>
