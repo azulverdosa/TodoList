@@ -34,6 +34,7 @@ const Login = () => {
 
   const handleRegisterClick = (event) => {
     event.preventDefault();
+
     if (
       newUser.name === '' ||
       newUser.email === '' ||
@@ -43,7 +44,7 @@ const Login = () => {
       setError({ message: 'Fields cannot be blank' });
     } else if (newUser.name && newUser.email && newUser.password === passwordConfirm) {
       axios
-        .post(urlJoin(process.env.REACT_APP_API_URL, 'user'), newUser)
+        .post(urlJoin(process.env.REACT_APP_API_URL, 'register'), newUser)
         .then((res) => {
           if (res.status === 200) {
             console.log('success');
