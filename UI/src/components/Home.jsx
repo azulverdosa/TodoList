@@ -4,7 +4,8 @@ import axios from 'axios';
 import urlJoin from 'url-join';
 import { Button, Modal } from 'semantic-ui-react';
 
-import ModalExampleBasic from './Modal';
+import ModalExampleBasic from './ModalConfirmDelete';
+import ModalEmptyFeild from './ModalEmptyFeild';
 
 const Home = () => {
   const handleDeleteItem = (id) => {
@@ -51,7 +52,15 @@ const Home = () => {
         actions={['Cancel', { key: 'done', content: 'Yes', positive: true }]}
       />
 
+      <Modal
+        trigger={<Button className="ui compact left floated button">Add Item</Button>}
+        header="Oops..."
+        content="You forgt something, feilds cannot be empty."
+        actions={[{ key: 'done', content: 'Ok', positive: true }]}
+      />
+
       <ModalExampleBasic />
+      <ModalEmptyFeild />
       <br />
     </div>
   );
