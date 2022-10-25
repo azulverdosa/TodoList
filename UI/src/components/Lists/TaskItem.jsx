@@ -98,7 +98,7 @@ const TaskItem = ({ task, setTasks, isEditing, updateList }) => {
 
   return (
     <div id={task._id} style={{ margin: '20px' }}>
-      {isEditing ? editTaskTemplate : viewTaskTemplate}{' '}
+      {isEditing ? editTaskTemplate : viewTaskTemplate}
     </div>
   );
 };
