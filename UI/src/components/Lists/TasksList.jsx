@@ -9,10 +9,10 @@ import TaskItem from './TaskItem';
 const TasksList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [listName, setListName] = useState('');
+  const [isFiltering, setIsFiltering] = useState(false);
 
   const { listId } = useParams();
-
-  const listName = listId;
 
   useEffect(() => {
     isEditing ||
@@ -20,8 +20,8 @@ const TasksList = () => {
         .get(urlJoin(process.env.REACT_APP_API_URL, 'list', listId))
         .then((res) => {
           if (res.status === 200 && res.data) {
-            console.log('res.data :>> ', res.data);
-            setTasks(res.data);
+            setTasks(res.data.tasks);
+            setListName(res.data.listName);
           } else {
             throw res;
           }
@@ -30,6 +30,30 @@ const TasksList = () => {
           console.log('error?', err);
         });
   }, [isEditing]);
+
+  const pendingTasksView = tasks
+    .filter((task) => task.completed === false)
+    .map((task) => (
+      <TaskItem
+        key={task._id}
+        task={task}
+        isEditing={isEditing}
+        setTasks={setTasks}
+        updateList={setTasks}
+      />
+    ));
+
+  const completedTasksView = tasks
+    .filter((task) => task.completed === true)
+    .map((task) => (
+      <TaskItem
+        key={task._id}
+        task={task}
+        isEditing={isEditing}
+        setTasks={setTasks}
+        updateList={setTasks}
+      />
+    ));
 
   return (
     <div style={{ margin: '20px' }}>
@@ -46,7 +70,13 @@ const TasksList = () => {
         <div className="hidden content">Edit</div>
       </button>
 
-      <button className="ui vertical animated right floated button" tabIndex="0">
+      <button
+        className="ui vertical animated right floated button"
+        tabIndex="0"
+        onClick={() => {
+          setIsFiltering(!isFiltering);
+        }}
+      >
         <div className="visible content">
           <i className="check square outline icon" />
         </div>
@@ -61,15 +91,8 @@ const TasksList = () => {
       </button>
 
       <h3>{listName}</h3>
-      {tasks.map((task) => (
-        <TaskItem
-          key={task._id}
-          task={task}
-          isEditing={isEditing}
-          setTasks={setTasks}
-          updateList={setTasks}
-        />
-      ))}
+      {pendingTasksView}
+      <div>{isFiltering && completedTasksView}</div>
       <AddTask setTasks={setTasks} listId={listId} />
     </div>
   );
