@@ -6,6 +6,7 @@ const TaskSchema = new Schema({
   id: { type: String },
   title: { type: String, required: true, maxLength: 500 },
   note: { type: String, required: false, maxLength: 500 },
+  // userId: { type: String, required: true },
   completed: { type: Boolean, required: true },
 });
 
