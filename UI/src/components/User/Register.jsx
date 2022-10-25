@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
-const Login = () => {
+const Register = () => {
   const [newUser, setNewUser] = useState({
     name: '',
     email: '',
@@ -47,7 +48,7 @@ const Login = () => {
         .post(urlJoin(process.env.REACT_APP_API_URL, 'register'), newUser)
         .then((res) => {
           if (res.status === 200) {
-            console.log('success');
+            console.log('REGISTRATION SUCCESS');
             setLoginStatus(true);
           } else {
             console.log('not error but will throw');
@@ -67,8 +68,7 @@ const Login = () => {
     }
   };
 
-  console.log(loginStatus);
-  return (
+  const newUserTemplate = (
     <div className="ui large form error" style={{ margin: '20px' }}>
       <div className="two fields">
         <form style={{ padding: 30 }}>
@@ -107,7 +107,6 @@ const Login = () => {
           <br />
           <div className="field">
             <label autoComplete="off">Password</label>
-
             <input
               name="passwordConfirm"
               value={passwordConfirm}
@@ -130,6 +129,9 @@ const Login = () => {
       </div>
     </div>
   );
+
+  console.log('register loginStatus', loginStatus);
+  return <div>{loginStatus ? <Navigate replace to="/lists" /> : newUserTemplate}</div>;
 };
 
-export default Login;
+export default Register;
