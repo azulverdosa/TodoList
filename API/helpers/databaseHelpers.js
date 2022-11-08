@@ -1,5 +1,8 @@
 const List = require('../models/listModel');
 const Task = require('../models/taskModel');
+const User = require('../models/userModel');
+
+const findUserByEmail = (email) => User.findOne({ email });
 
 const deleteTasksFromDB = (ids = []) => {
   const filter = ids?.length ? { _id: { $in: ids } } : {};
@@ -39,6 +42,7 @@ const getListsFromDB = (ids = []) => {
 };
 
 module.exports = {
+  findUserByEmail,
   deleteTasksFromDB,
   getListsFromDB,
   getTasksFromDB,
