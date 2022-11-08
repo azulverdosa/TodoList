@@ -24,7 +24,7 @@ const Home = () => {
   };
 
   return (
-    <div style={{ margin: '20px' }}>
+    <main style={{ margin: '20px' }}>
       <h5>You look like you might need to do something, let us help you with that 😉</h5>
       <h5>But first, let's get you sorted:</h5>
       <Link to="/login">
@@ -62,7 +62,7 @@ const Home = () => {
       <ModalExampleBasic />
       <ModalEmptyFeild />
       <br />
-    </div>
+    </main>
   );
 };
 
