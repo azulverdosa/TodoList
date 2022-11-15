@@ -8,10 +8,11 @@ import ListItem from './ListItem';
 const ListsList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [lists, setLists] = useState([]);
+
   useEffect(() => {
     isEditing ||
       axios
-        .get(urlJoin(process.env.REACT_APP_API_URL, 'list'))
+        .get(urlJoin(process.env.REACT_APP_API_URL, 'list'), { withCredentials: true })
         .then((res) => {
           if (res.status === 200) {
             setLists(
