@@ -6,6 +6,7 @@ import { Button, Modal } from 'semantic-ui-react';
 
 import ModalExampleBasic from './ModalConfirmDelete';
 import ModalEmptyFeild from './ModalEmptyFeild';
+import Login from './User/Login';
 
 const Home = () => {
   const handleDeleteItem = (id) => {
@@ -25,15 +26,16 @@ const Home = () => {
 
   return (
     <main style={{ margin: '20px' }}>
-      <h5>You look like you might need to do something, let us help you with that 😉</h5>
-      <h5>But first, let's get you sorted:</h5>
-      <Link to="/login">
+      <h1>Welcome to ToDoMatic</h1>
+      <h5>Let's get you sorted:</h5>
+      <Login />
+      {/* <Link to="/login">
         <button className="ui compact left floated button">Login</button>
-      </Link>
-      <Link to="/register">
+      </Link> */}
+      {/* <Link to="/register">
         <button className="ui compact left floated button">Register</button>
-      </Link>
-      <br />
+      </Link> */}
+      {/* <br />
       <h5>Let's play around a bit:</h5>
       <Button className="ui compact left floated button">Delete</Button>
 
@@ -60,7 +62,7 @@ const Home = () => {
       />
 
       <ModalExampleBasic />
-      <ModalEmptyFeild />
+      <ModalEmptyFeild /> */}
       <br />
     </main>
   );
