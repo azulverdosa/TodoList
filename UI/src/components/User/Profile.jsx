@@ -32,7 +32,7 @@ const Profile = () => {
 
   return (
     <main>
-      <h1 style={{ textAlign: 'center' }}>Hello there 'user Name'!</h1>
+      <h1 style={{ textAlign: 'center' }}>Well, hello there 'user Name'!</h1>
       <img
         style={{ margin: '20px' }}
         alt="avatar"
@@ -45,11 +45,7 @@ const Profile = () => {
       <span style={{ marginLeft: '20px' }}>Desription</span>
       <br />
       <br />
-      <button
-        style={{ marginLeft: '20px' }}
-        onClick={handleLogout}
-        className="ui compact floated button"
-      >
+      <button style={{ marginLeft: '20px' }} className="ui compact floated button">
         Edit Profile
       </button>
       <Link to="/lists">
