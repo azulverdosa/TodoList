@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
 const Register = () => {
+  // const userRef = useRef();
+  // const errRef = useRef();
+
   const [newUser, setNewUser] = useState({
     name: '',
     email: '',
@@ -12,6 +15,10 @@ const Register = () => {
   const [loginStatus, setLoginStatus] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState({ message: '' });
+
+  // useEffect(() => {
+  //   userRef.current.focus();
+  // }, []);
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -69,9 +76,13 @@ const Register = () => {
   };
 
   const newUserTemplate = (
-    <div className="ui large form error" style={{ margin: '20px' }}>
+    <main
+      className="ui large form error"
+      style={{ margin: '20px', display: 'flex', flexDirection: 'column' }}
+    >
+      <h3 style={{ margin: 0 }}>Register for an account</h3>
       <div className="two fields">
-        <form style={{ padding: 30 }}>
+        <form style={{ padding: 20 }}>
           <div className="field">
             <label autoComplete="off">Name</label>
             <input
@@ -127,7 +138,13 @@ const Register = () => {
           </button>
         </form>
       </div>
-    </div>
+      <p>
+        Already have an account? <br />
+        <Link to="/">
+          <span>Sign in Here</span>
+        </Link>
+      </p>
+    </main>
   );
 
   console.log('register loginStatus', loginStatus);
