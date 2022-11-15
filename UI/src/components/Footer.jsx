@@ -18,7 +18,7 @@ const Footer = () => {
       <button className="mini ui compact right floated button" style={{ marginTop: '27px' }}>
         Great!
       </button>
-      <footer>{`Copyright © Upbeat Code ${year}`}</footer>;
+      <footer style={{ fontSize: '12px' }}>{`Copyright © AzulCode ${year}`}</footer>
     </h2>
   );
 };
