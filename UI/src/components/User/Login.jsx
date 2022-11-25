@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { Redirect, Navigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
+import { Navigate, Link } from 'react-router-dom';
 import urlJoin from 'url-join';
 
-// import { axiosAuth } from '../../helpers/fetchWithAuth';
+import { useAuthContext } from '../../helpers/useAuthContext';
 
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -13,6 +12,8 @@ const Login = () => {
   const [loginStatus, setLoginStatus] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState({});
   const [error, setError] = useState({ message: '' });
+
+  const { axiosWithAuth } = useAuthContext(); //
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -24,29 +25,24 @@ const Login = () => {
         [name]: value,
       };
     });
-    // console.log('loginInfo :>> ', loginInfo);
   };
 
   const handleLoginClick = (event) => {
     event.preventDefault();
 
     if (loginInfo.email === '' || loginInfo.password === '') {
-      setError({ message: 'Feilds cannot be blank' });
+      setError({ message: 'Fields cannot be blank' });
     } else if (loginInfo.email && loginInfo.password) {
-      axios
-        .post(urlJoin(process.env.REACT_APP_API_URL, 'auth'), loginInfo, {
-          // headers: {authorization: `Bearer ${jwt}`},
-          withCredentials: true,
-        })
+      axiosWithAuth
+        .post(urlJoin(process.env.REACT_APP_API_URL, 'auth'), loginInfo)
         .then((res) => {
-          if (res.status === 200) {
-            console.log('LOG IN SUCCESS');
-            console.log('res.data :>> ', res.data);
-            setLoginStatus(true);
-            setLoggedInUser(res.data);
-          } else {
-            throw res;
-          }
+          console.log('res :>> ', res);
+          // if (res.status === 200) {
+          //   setLoginStatus(true);
+          //   setLoggedInUser(res.data.payload.userId);
+          // } else {
+          //   throw res;
+          // }
         })
         .catch((err) => {
           console.log('error :>> ', err);
@@ -102,7 +98,11 @@ const Login = () => {
     </main>
   );
 
-  return <div>{loginStatus ? <Navigate replace to="/profile" /> : loggedOutTemplate}</div>;
+  return (
+    <div>
+      {loginStatus ? <Navigate replace to="/profile" user={loggedInUser} /> : loggedOutTemplate}
+    </div>
+  );
 };
 
 export default Login;
