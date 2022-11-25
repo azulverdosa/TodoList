@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
-const Profile = () => {
+const Profile = ({ user }) => {
   const [loginStatus, setLoginStatus] = useState(true);
   const navigate = useNavigate();
-
+  console.log('user :>> ', user);
   const handleLogout = (event) => {
     event.preventDefault();
 
@@ -42,7 +42,7 @@ const Profile = () => {
       <span style={{ fontWeight: 'bold' }}>Username</span>
       <br />
 
-      <span style={{ marginLeft: '20px' }}>Desription</span>
+      <span style={{ marginLeft: '20px' }}>Description</span>
       <br />
       <br />
       <button style={{ marginLeft: '20px' }} className="ui compact floated button">
