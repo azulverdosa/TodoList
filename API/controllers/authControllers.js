@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
+const Test = require('../models/testModel');
 
 // const findUserByEmail = require('../helpers/databaseHelpers'); - not working??
 const findUserByEmail = (email) => User.findOne({ email });
@@ -13,11 +14,19 @@ const findUserByEmail = (email) => User.findOne({ email });
 //@route POST /auth/login
 //@access Public
 const userLogin = async (req, res) => {
-  const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
 
   const foundUser = await findUserByEmail(email);
+
+  const whatever = new Test({ name: 'boop4' });
+
+  console.log('preboop :>> ');
+  whatever
+    .save()
+    .then((meep) => console.log('meep :>> ', meep))
+    .catch((err) => console.log('err :>> ', err));
+  console.log('postboop :>> ');
 
   if (foundUser) {
     try {
@@ -34,16 +43,10 @@ const userLogin = async (req, res) => {
           expiresIn: '10s', //change to xdays
         });
 
-        res.cookie('jwt', refreshToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'None',
-          maxAge: 60, //change to 24 * 60 * 60 * 1000
+        return res.status(200).json({
+          accessToken,
+          refreshToken,
         });
-        console.log('Cookies: ', req.cookies);
-
-        console.log('PSWD MATCH');
-        return res.json({ accessToken, refreshToken });
       }
     } catch (err) {
       console.error(err);
@@ -72,14 +75,13 @@ const userRefreshToken = async (req, res) => {
       if (!foundUser) return res.status(403).send('Forbidden');
 
       jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-        if (err || foundUser._id !== decoded.foundUser._id)
+        if (err || foundUser._id !== decoded.foundUser._id) {
           return res.send(403).status('Not allowed');
+        }
 
-        const accessToken = jwt.sign(
-          { 'foundUser._id': decoded.foundUser._id },
-          process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: '10s' }
-        );
+        const accessToken = jwt.sign({ userId: foundUser._id }, process.env.ACCESS_TOKEN_SECRET, {
+          expiresIn: '10s',
+        });
 
         return res.json({ accessToken });
       });
