@@ -6,9 +6,10 @@ const Task = require('../models/taskModel');
 const List = require('../models/listModel');
 
 const { addNewTask, editTask, deleteTask } = require('../controllers/taskControllers');
+const verifyJWT = require('../middlewares/verifyJWT');
 
-router.route('/').post(addNewTask);
+router.route('/').post(verifyJWT, addNewTask);
 
-router.route('/:taskId').post(editTask).delete(deleteTask);
+router.route('/:taskId').post(verifyJWT, editTask).delete(verifyJWT, deleteTask);
 
 module.exports = router;
