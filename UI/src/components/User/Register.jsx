@@ -3,6 +3,8 @@ import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import urlJoin from 'url-join';
 
+import axiosWithAuth from '../../helpers/fetchWithAuth';
+
 const Register = () => {
   // const userRef = useRef();
   // const errRef = useRef();
@@ -51,7 +53,7 @@ const Register = () => {
     ) {
       setError({ message: 'Fields cannot be blank' });
     } else if (newUser.name && newUser.email && newUser.password === passwordConfirm) {
-      axios
+      axiosWithAuth
         .post(urlJoin(process.env.REACT_APP_API_URL, 'register'), newUser)
         .then((res) => {
           if (res.status === 200) {
