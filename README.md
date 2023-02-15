@@ -21,7 +21,7 @@
 
 ---
 
-This is a simple MERN application to track user exercises. It's a helpful app for tracking (exercises or otherwise) and was intended for me to continue to work on my fullstack building. It is also an attempt for me to learn Authentiation. The I used some styling scaffolding from Semantic UI to keep things clean looking, however, I don't claim to be a designer and the design is still a work in progress. I used MongoDB to store tasks and user information and learning a bit of Mongoose was an added bonus to building this project.
+This is a simple MERN application for creating todo lists. It is also an attempt for me to learn Authentiation. I used some styling scaffolding from Semantic UI to keep things clean looking, however, I don't claim to be a designer and the design is still a work in progress. I used MongoDB to store tasks and user information and learning a bit of Mongoose was an added bonus to building this project. It was working well initially, however I seem to have missed something and now it's not working the way I want it to. I am still working on it while I look at some other projects, but it is definietly not finsihed.
 
 ## Technologies Used
 
@@ -39,21 +39,26 @@ This is a simple MERN application to track user exercises. It's a helpful app fo
 
 Login & Registration
 
-- Description
-  ![Home Page](/ui/screenshots/2.png 'Home Page')
+- current users are able to login:
+  ![login Page](/UI/demo_images/1.png 'login Page')
 
-Create a list
+- New users are able to register
+  ![register Page](/UI/demo_images/2.png 'register Page')
 
-- Description
-  ![Home Page](/ui/screenshots/3.png 'Home Page')
+User homepage
 
-Create a task
+- Personal user home page
+  ![user Page](/UI/demo_images/3.png 'user Page')
 
-- Description
+Lists
+
+- Users can add or edit their personal lists
+- Personal user home page
+  ![list Page](/UI/demo_images/4.png 'list Page')
 
 Create a update tasks
 
-- Description
+- Users can add items to or edit items on their lists. (this is where something starts to go wrong and I lose functionality - working on it)
 
 ## Setup
 
@@ -97,29 +102,27 @@ How does one go about using it? Provide various use cases and code examples here
 
 ---
 
-Project is: In Progress
+In Progress
 
 ## Room for Improvement
 
 ---
 
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
 Improvement Thoughts:
 
-- Improvement to be done 1
-- Improvement to be done 2
+- This was my first attempt and adding Auth to a project and it has been a bit tricky. I am going to continue working on it, but essentially this is the main theng that needs to be added
+- Styling needs updating for sure.
 
 To do:
 
-- Feature to be added 1
-- Feature to be added 2
+- [ ] Add authentication
+- [ ] Update styling
 
 ## Acknowledgements
 
 ---
 
-Many thanks to [MDN](), this project was based on [this tutorial]().
+Many thanks to [MDN](https://developer.mozilla.org/en-US/), this project was based on [this tutorial](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_todo_list_beginning).
 
 ## Contact
 
@@ -144,20 +147,3 @@ Give a ⭐️ if you like this project!
 MIT License Copyright (c) [2023] [AvaElise]
 
 ---
-
-### Basic Rundown
-
-- Home page
-
-![home](./UI/demo_images/Screenshot%202023-01-20%20at%202.13.12%20PM.png 'Home Page View')
-
-- Register page
-
-![register](./UI/demo_images/Screenshot%202023-01-20%20at%202.13.44%20PM.png 'Register Page View')
-
-- Registration is saved to MongoDB
-- Loggin in brings you to Profile page
-- Navigate to your Lists
-- Can add/delete/edit a list and changes are saved to MongoDB
-- Click on a list to see the tasks you have in those lists
-- Can add/delete/edit a task and changes are saved to MongoDB
