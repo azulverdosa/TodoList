@@ -56,12 +56,15 @@ Create a update tasks
 
 ### Run Locally
 
-1. Clone repo locally.
-2. Run `npm install` in your bash/command line in the main project folder.
-3. Run `npm start` in your bash/command line in the UI folder.
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-5. Run `npm run dev` in your bash/command line in the API folder.
-6. Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
+1. Clone repo locally
+2. Change into API folder
+3. Run `npm install` in your bash/command line
+4. Change into UI folder
+5. Run `npm install` in your bash/command line
+6. In the API folder, run `npm run dev` in your bash/command line
+7. Open [http://localhost:3001/hello-world](http://localhost:3001/hello-world) to view it in the browser.
+8. In the UI folder, run `npm start` in your bash/command line
+9. Open [http://localhost:3000](http://localhost:3000) to view it n the browser.
 
 ### Available Commands
 
