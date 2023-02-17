@@ -29,7 +29,7 @@ const TasksList = () => {
         .catch((err) => {
           console.log('error?', err);
         });
-  }, [isEditing]);
+  }, [isEditing, listId]);
 
   const pendingTasksView = tasks
     .filter((task) => task.completed === false)
