@@ -34,7 +34,7 @@ app.use('/auth', require('./routes/authRoute'));
 app.use('/', require('./routes/userRoute'));
 
 //server
-app.get('/hello', (req, res) => {
+app.get('/hello-world', (req, res) => {
   res.send(' 🙈 🙉 🙊');
 });
 
